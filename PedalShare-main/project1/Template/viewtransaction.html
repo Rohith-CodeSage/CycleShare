@@ -1,0 +1,155 @@
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Transactions</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.3);
+            z-index: 1;
+        }
+
+        .popup-container {
+            position: relative;
+            z-index: 2;
+            width: 600px;
+            display: flex;
+            flex-direction: column;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            background-color: #4a4aff;
+            color: #ffffff;
+            padding: 15px;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+            text-align: center;
+        }
+
+        .header h2 {
+            margin: 0;
+        }
+
+        .transaction-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .transaction-table th, .transaction-table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .transaction-table th {
+            background-color: #f4f4f4;
+        }
+
+        .transaction-status {
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .status-completed {
+            background-color: #28a745;
+            color: #fff;
+        }
+
+        .status-pending {
+            background-color: #ffc107;
+            color: #fff;
+        }
+
+        .status-failed {
+            background-color: #dc3545;
+            color: #fff;
+        }
+
+        .go-back-btn {
+            background-color: #4a4aff;
+            color: #ffffff;
+            padding: 10px 20px;
+            font-size: 14px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+
+        .go-back-btn:hover {
+            background-color: #3333cc;
+        }
+    </style>
+</head>
+<body>
+
+<div class="overlay"></div>
+
+<div class="popup-container">
+    <div class="header">
+        <h2>Transaction History</h2>
+    </div>
+
+    <table class="transaction-table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Transaction ID</th>
+                <th>Amount ($)</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>2024-11-01</td>
+                <td>#12345</td>
+                <td>50.00</td>
+                <td><span class="transaction-status status-completed">Completed</span></td>
+            </tr>
+            <tr>
+                <td>2024-11-03</td>
+                <td>#12346</td>
+                <td>30.00</td>
+                <td><span class="transaction-status status-pending">Pending</span></td>
+            </tr>
+            <tr>
+                <td>2024-11-05</td>
+                <td>#12347</td>
+                <td>20.00</td>
+                <td><span class="transaction-status status-failed">Failed</span></td>
+            </tr>
+            <!-- Add more rows here -->
+        </tbody>
+    </table>
+
+    <button class="go-back-btn" onclick="window.history.back();">Go Back</button>
+</div>
+
+</body>
+</html>
+{% endblock body %}

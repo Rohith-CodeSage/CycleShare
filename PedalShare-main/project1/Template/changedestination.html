@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Change Destination</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+            max-width: 800px;
+            margin: auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #34495E;
+        }
+
+        form {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            outline: none;
+            font-size: 14px;
+        }
+
+        input:focus, select:focus {
+            border-color: #1ABC9C;
+        }
+
+        button {
+            margin-top: 20px;
+            width: 100%;
+            background-color: #1ABC9C;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #16A085;
+        }
+    </style>
+</head>
+<body>
+    <h1>Change Destination</h1>
+    <form action="/submit-destination-change" method="POST">
+        <label for="booking-id">Booking ID:</label>
+        <input type="number" id="booking-id" name="booking-id" placeholder="Enter your booking ID" required>
+
+        <label for="new-destination">New Drop-off Location:</label>
+        <select id="new-destination" name="new-destination" required>
+            <option value="">Select a new drop-off location</option>
+            <option value="cse-block">CSE Block</option>
+            <option value="ece-block">ECE Block</option>
+            <option value="nescafe">Nescafe</option>
+            <option value="bose-hall">Bose Hall</option>
+            <option value="krishna-mess">Krishna Mess</option>
+            <option value="dominos">Dominos</option>
+            <option value="metallurgy-block">Metallurgy Block</option>
+            <option value="bio-technology-block">Bio-Technology Block</option>
+            <option value="food-courts">Food Courts</option>
+        </select>
+
+        <label for="reason">Reason for Change (optional):</label>
+        <input type="text" id="reason" name="reason" placeholder="Optional reason for changing destination">
+
+        <button type="submit">Submit Change</button>
+    </form>
+</body>
+</html>

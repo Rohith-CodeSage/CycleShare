@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Renter Dashboard - Cycle Share</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #4b6cb7, #182848);
+      color: #34495E;
+      text-align: center;
+      overflow-x: hidden;
+    }
+    header {
+      background: linear-gradient(135deg, #182848, #4b6cb7);
+      color: #fff;
+      padding: 50px 20px;
+      box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.3);
+      animation: fadeIn 1.2s ease-out;
+    }
+    header h2 {
+      font-size: 3rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    main {
+      padding: 30px 10px;
+    }
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .cycle-list {
+      margin: 20px auto;
+      width: 90%;
+      max-width: 600px;
+    }
+    .cycle-item {
+      text-align: left;
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: fadeIn 1.2s ease-out;
+      margin-bottom: 20px;
+    }
+    .cycle-item:hover {
+      transform: translateY(-8px);
+      box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.3);
+    }
+    .owner-info {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .owner-profile-pic {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      border: 3px solid #4b6cb7;
+      margin-right: 15px;
+      box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+    }
+    .cycle-image {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-top: 15px;
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+    .cycle-image:hover {
+      transform: scale(1.05);
+    }
+    button {
+      background: linear-gradient(135deg, #182848, #4b6cb7);
+      color: #fff;
+      border: none;
+      padding: 12px 24px;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease-in-out;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+    button:hover {
+      background: linear-gradient(135deg, #4b6cb7, #182848);
+      transform: scale(1.05);
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+    }
+    .pagination {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+    }
+    .pagination button {
+      margin: 0 8px;
+      padding: 10px 15px;
+    }
+    .pagination span {
+      font-weight: bold;
+      padding: 10px;
+      font-size: 1.1rem;
+      color: #fff;
+    }
+    .star-rating {
+      color: #f4c150;
+      font-size: 1.2rem;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h2>Cycle Share - Available Cycles</h2>
+  </header>
+  <main id="cycle-list-container">
+    <!-- Initial cycle listings (first page data will load here) -->
+  </main>
+  <div class="pagination" id="pagination-controls">
+    <!-- Page numbers will be dynamically generated here -->
+  </div>
+  <script>
+    const totalPages = 5;
+
+    // Retrieve the page number from the URL or default to 1
+    const urlParams = new URLSearchParams(window.location.search);
+    let currentPage = parseInt(urlParams.get('page')) || 1;
+
+    const cyclesData = [
+    // Page 1 data
+    [
+      { owner: 'Jane Smith', ownerPhoto: 'https://via.placeholder.com/80', image: 'https://via.placeholder.com/600x400', available: '9 AM - 5 PM', location: 'Nit circle', cost: '₹10/hr', rating: '★★★★☆' },
+      { owner: 'Emily White', ownerPhoto: 'https://via.placeholder.com/80', image: 'https://via.placeholder.com/600x400', available: '1 PM - 7 PM', location: 'krishna mess', cost: '₹12/hr', rating: '★★★★★' },
+      { owner: 'Carlos Garcia', ownerPhoto: 'https://via.placeholder.com/80', image: 'https://via.placeholder.com/600x400', available: '10 AM - 4 PM', location: 'central library', cost: '₹15/hr', rating: '★★★☆☆' }
+    ],
+    // Page 2 data
+    [
+      { owner: 'Alex Johnson', ownerPhoto: 'https://via.placeholder.com/80', image: 'https://via.placeholder.com/600x400', available: '8 AM - 6 PM', location: 'central library', cost: '₹11/hr', rating: '★★★★☆' },
+      { owner: 'Maya Brown', ownerPhoto: 'https://via.placeholder.com/80', image: 'https://via.placeholder.com/600x400', available: '2 PM - 8 PM', location: 'dominos', cost: '₹14/hr', rating: '★★★★★' },
+      { owner: 'Liam Davis', ownerPhoto: 'https://via.placeholder.com/80', image: 'https://via.placeholder.com/600x400', available: '7 AM - 3 PM', location: 'alu ', cost: '₹13/hr', rating: '★★☆☆☆' }
+    ],
+    // Page 3 data
+    [
+      { owner: 'Sophia Lee', ownerPhoto: 'https://via.placeholder.com/80', image: 'https://via.placeholder.com/600x400', available: '6 AM - 4 PM', location: 'main gate', cost: '₹9/hr', rating: '★★★☆☆' },
+      { owner: 'Michael Green', ownerPhoto: 'https://via.placeholder.com/80', image: 'https://via.placeholder.com/600x400', available: '12 PM - 9 PM', location: 'Nescafe', cost: '₹16/hr', rating: '★★★★☆' },
+      { owner: 'Chloe Brown', ownerPhoto: 'https://via.placeholder.com/80', image: 'https://via.placeholder.com/600x400', available: '5 AM - 2 PM', location: 'Location 9', cost: '₹18/hr', rating: '★★★★★' }
+    ],
+    // Page 4 data
+    [
+      { owner: 'Jacob Wilson', ownerPhoto: 'https://via.placeholder.com/80', image: 'https://via.placeholder.com/600x400', available: '8 AM - 12 PM', location: 'Location 10', cost: '₹8/hr', rating: '★★★☆☆' },
+      { owner: 'Isabella Martin', ownerPhoto: 'https://via.placeholder.com/80', image: 'https://via.placeholder.com/600x400', available: '3 PM - 11 PM', location: 'Location 11', cost: '₹20/hr', rating: '★★★★☆' },
+      { owner: 'William Brown', ownerPhoto: 'https://via.placeholder.com/80', image: 'https://via.placeholder.com/600x400', available: '9 AM - 5 PM', location: 'Location 12', cost: '₹11/hr', rating: '★★☆☆☆' }
+    ],
+    // Page 5 data
+    [
+      { owner: 'Emma Scott', ownerPhoto: 'https://via.placeholder.com/80', image: 'https://via.placeholder.com/600x400', available: '7 AM - 3 PM', location: 'Location 13', cost: '₹13/hr', rating: '★★★★☆' },
+      { owner: 'Noah Campbell', ownerPhoto: 'https://via.placeholder.com/80', image: 'https://via.placeholder.com/600x400', available: '4 PM - 10 PM', location: 'Location 14', cost: '₹19/hr', rating: '★★★★★' },
+      { owner: 'Olivia Parker', ownerPhoto: 'https://via.placeholder.com/80', image: 'https://via.placeholder.com/600x400', available: '11 AM - 7 PM', location: 'Location 15', cost: '₹12/hr', rating: '★★★☆☆' }
+    ]
+  ];
+  
+
+    function loadCycles(page) {
+      const cycleListContainer = document.getElementById('cycle-list-container');
+      cycleListContainer.innerHTML = '';
+      cyclesData[page - 1].forEach(cycle => {
+        const cycleItem = `
+          <div class="cycle-list">
+            <div class="cycle-item">
+              <div class="owner-info">
+                <img src="${cycle.ownerPhoto}" alt="${cycle.owner} Profile" class="owner-profile-pic">
+                <h3>Owner: ${cycle.owner}</h3>
+              </div>
+              <img src="${cycle.image}" alt="Cycle Image" class="cycle-image">
+              <p><strong>Available:</strong> ${cycle.available}</p>
+              <p><strong>Location:</strong> ${cycle.location}</p>
+              <p><strong>Cost per Hour:</strong> ${cycle.cost}</p>
+              <div class="star-rating">${cycle.rating}</div>
+              <button onclick="bookCycle('${cycle.owner}')">Book Now</button>
+            </div>
+          </div>`;
+        cycleListContainer.insertAdjacentHTML('beforeend', cycleItem);
+      });
+    }
+
+    function createPagination() {
+      const paginationControls = document.getElementById('pagination-controls');
+      paginationControls.innerHTML = '';
+      if (currentPage > 1) {
+        const prevButton = document.createElement('button');
+        prevButton.textContent = 'Prev';
+        prevButton.onclick = () => { window.location.href = `?page=${currentPage - 1}`; };
+        paginationControls.appendChild(prevButton);
+      }
+      const startPage = Math.max(1, currentPage - 1);
+      const endPage = Math.min(totalPages, currentPage + 1);
+      for (let i = startPage; i <= endPage; i++) {
+        const pageButton = document.createElement('button');
+        pageButton.textContent = i;
+        pageButton.disabled = (i === currentPage);
+        pageButton.onclick = () => { window.location.href = `?page=${i}`; };
+        paginationControls.appendChild(pageButton);
+      }
+      if (currentPage < totalPages) {
+        const nextButton = document.createElement('button');
+        nextButton.textContent = 'Next';
+        nextButton.onclick = () => { window.location.href = `?page=${currentPage + 1}`; };
+        paginationControls.appendChild(nextButton);
+      }
+    }
+
+    function bookCycle(owner) {
+      alert(`You have booked a cycle owned by ${owner}!`);
+    }
+
+    loadCycles(currentPage);
+    createPagination();
+  </script>
+</body>
+</html>
